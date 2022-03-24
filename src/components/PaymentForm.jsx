@@ -53,7 +53,8 @@ const PaymentForm = () => {
                 placeholder='cvc' 
                 value={cvc} 
                 onChange={e => setCvc(e.target.value)} 
-                onFocus={e => setFocus(e.target.name)}    
+                onFocus={e => setFocus(e.target.name)}  
+                pattern="[0-9]+"  
             />
         </form>
     </div>
