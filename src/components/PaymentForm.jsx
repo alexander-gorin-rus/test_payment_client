@@ -17,14 +17,23 @@ const PaymentForm = () => {
     });
 
     const {CardNumber, CardHolderName, ExpDate, CVV, amount, focus} = values;
-    const [errors, setErrors] = useState({})
 
+    const [disabled, setDisabled] = useState(false)
+   
     const handleFocus = (e) => {
         setValues({ 
             ...values,
             focus: (e.target.name === 'CVV') ? 'cvc' : e.target.name
         });
     }
+
+    // const checkInputs = () => {
+    //     if (!CardHolderName || !CVV || CVV.length < 3 || !ExpDate || !CardNumber || !amount) {
+    //         setDisabled(true)
+    //     }
+    // }
+
+    //checkInputs();
 
     const onChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
@@ -33,17 +42,9 @@ const PaymentForm = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         handlePayment(values)
-        setErrors(validateInfo(values))
-        setValues({
-            CardHolderName: '',
-            CardNumber: '',
-            ExpDate: '',
-            CVV: '',
-            focus: '',
-            amount: 0
-        })
     }
 
+    
     return (
         <div className='container m-4'>
             <Cards 
@@ -104,7 +105,7 @@ const PaymentForm = () => {
                     onChange={onChange} 
                     min='1' 
                 />
-                <button type='Submit' disabled={!CardHolderName || !CardNumber || !ExpDate || !CVV || !amount} className='btn btn-primary m-2'>Отправить</button>
+                <button type='Submit' disabled={!CardHolderName || !CVV || CVV.length < 3 || !ExpDate || !CardNumber || CardNumber.length < 16 || !amount} className='btn btn-primary m-2'>Оплатить</button>
             </form>
         </div>
     )
