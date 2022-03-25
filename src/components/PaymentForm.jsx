@@ -36,14 +36,23 @@ const PaymentForm = () => {
         toast.error('Не верно введен месяц окончания действия карты')
     }
 
+    const yearExpDateError = () => {
+        toast.error('Не верно введен год окончания действия карты')
+    }
+
     // 
     let wrongExpDateMonth = ExpDate.slice(0,2);
+    let wrongExpDateYear = ExpDate.slice(2,5);
+    console.log(wrongExpDateYear)
 
     const onSubmit = (e) => {
         e.preventDefault()
         if (wrongExpDateMonth > 12 || wrongExpDateMonth.toString() === '00') {
             monthExpDateError()
-        } else {
+        } else if (wrongExpDateYear < 22) {
+            yearExpDateError()
+        } 
+        else {
             handlePayment(values)
             toastSuccess()
         }
@@ -84,7 +93,7 @@ const PaymentForm = () => {
                 <input 
                     className="form-control m-2"
                     type='text' 
-                    maxLength="6"
+                    maxLength="4"
                     name="ExpDate" 
                     placeholder='MM/ГГ' 
                     value={ExpDate} 
@@ -116,7 +125,7 @@ const PaymentForm = () => {
                     !CVV || 
                     CVV.length < 3 || 
                     !ExpDate ||
-                    ExpDate.length < 6 || 
+                    ExpDate.length < 4 || 
                     !CardNumber || 
                     CardNumber.length < 16 || 
                     !amount
