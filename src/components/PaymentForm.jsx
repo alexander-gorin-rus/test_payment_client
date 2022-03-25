@@ -2,6 +2,8 @@ import React, { useState  } from 'react';
 import Cards from 'react-credit-cards';
 import "react-credit-cards/es/styles-compiled.css";
 import { handlePayment } from '../functions/payments';
+import { toast } from 'react-toastify';
+import validateInfo from './validateInfo';
 
 const PaymentForm = () => {
 
@@ -10,16 +12,25 @@ const PaymentForm = () => {
         CardNumber: '',
         ExpDate: '',
         CVV: '',
+        focus: '',
         amount: 0
     });
 
-    const {CardNumber, CardHolderName, ExpDate, CVV, amount} = values
+    const {CardNumber, CardHolderName, ExpDate, CVV, amount, focus} = values;
+    const [errors, setErrors] = useState({})
 
     // const [number, setNumber] = useState("");
     // const [name, setName] = useState("");
     // const [expiry, setExpiry] = useState("");
     // const [cvc, setCvc] = useState("");
-    const [focus, setFocus] = useState("");
+    //const [focus, setFocus] = useState("");
+
+    const handleFocus = (e) => {
+        setValues({ 
+            ...values,
+            focus: (e.target.name === 'CVV') ? 'cvc' : e.target.name
+        });
+    }
 
     const onChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
@@ -28,65 +39,84 @@ const PaymentForm = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         handlePayment(values)
-        console.log(values)
+            .then(message => toast.success(message))
+            .catch(error => toast.error(error))
+        setErrors(validateInfo(values))
+        setValues({
+            CardHolderName: '',
+            CardNumber: '',
+            ExpDate: '',
+            CVV: '',
+            focus: '',
+            amount: 0
+        })
     }
 
-  return (
-    <div>
-        <Cards 
-            number={CardNumber}
-            name={CardHolderName}
-            expiry={ExpDate}
-            cvc={CVV}
-            focused={focus}
-        />
-        <form onSubmit={onSubmit}>
-            <input 
-                type='tel' 
-                maxLength="16"
-                name="CardNumber" 
-                placeholder='Номер карты' 
-                value={CardNumber} 
-                onChange={onChange} 
-                onFocus={e => setFocus(e.target.name)}    
+    return (
+        <div className='container-fluid m-4'>
+            <Cards 
+                number={CardNumber}
+                name={CardHolderName}
+                expiry={ExpDate}
+                cvc={CVV}
+                focused={focus}
             />
-            <input 
-                type='text' 
-                name="CardHolderName" 
-                placeholder='ФИО' 
-                value={CardHolderName} 
-                onChange={onChange} 
-                onFocus={e => setFocus(e.target.name)}    
-            />
-            <input 
-                type='text' 
-                maxLength="4"
-                name="ExpDate" 
-                placeholder='MM/ГГ' 
-                value={ExpDate} 
-                onChange={onChange} 
-                onFocus={e => setFocus(e.target.name)}    
-            />
-            <input 
-                type='tel'
-                maxLength="3" 
-                name="CVV" 
-                placeholder='cvc' 
-                value={CVV} 
-                onChange={onChange} 
-                onFocus={e => setFocus(e.target.name)}  
-            />
-            <input 
-                type='number' 
-                name="amount"  
-                value={amount} 
-                onChange={onChange} 
-                min='1' 
-            />
-            <button type='Submit'>Отправить</button>
-        </form>
-    </div>
-  )
+            <form onSubmit={onSubmit}>
+            <label className="form-label mr-2">Номер карты</label>
+                <input 
+                    className="form-control m-2"
+                    type='tel' 
+                    maxLength="16"
+                    name="CardNumber" 
+                    value={CardNumber} 
+                    onChange={onChange} 
+                    onFocus={handleFocus} 
+                    isValid={errors.cnumber}   
+                />
+                <label className="form-label mr-2">ФИО</label>
+                <input 
+                    className="form-control m-2"
+                    type='text' 
+                    name="CardHolderName" 
+                    value={CardHolderName} 
+                    onChange={onChange} 
+                    onFocus={handleFocus}    
+                />
+                <label className="form-label mr-2">Срок действия карты</label>
+                <input 
+                    className="form-control m-2"
+                    type='text' 
+                    maxLength="4"
+                    name="ExpDate" 
+                    placeholder='MM/ГГ' 
+                    value={ExpDate} 
+                    onChange={onChange} 
+                    onFocus={handleFocus}    
+                />
+                <label className="form-label mr-2">CVV</label>
+                <input 
+                    className="form-control m-2"
+                    type='tel'
+                    maxLength="3" 
+                    name="CVV" 
+                    value={CVV} 
+                    onChange={onChange} 
+                    onFocus={handleFocus}  
+                />
+                <label className="form-label mr-2">Количество</label>
+                <input 
+                    style={{width: '105px'}}
+                    className="form-control m-2"
+                    type='number' 
+                    name="amount"  
+                    value={amount} 
+                    onChange={onChange} 
+                    min='1' 
+                />
+                <button type='Submit' className='btn btn-primary m-2'>Отправить</button>
+            </form>
+        </div>
+    )
 }
 
 export default PaymentForm
