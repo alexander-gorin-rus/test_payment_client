@@ -3,7 +3,6 @@ import Cards from 'react-credit-cards';
 import "react-credit-cards/es/styles-compiled.css";
 import { handlePayment } from '../functions/payments';
 import { toast } from 'react-toastify';
-import validateInfo from './validateInfo';
 
 const PaymentForm = () => {
 
@@ -17,8 +16,6 @@ const PaymentForm = () => {
     });
 
     const {CardNumber, CardHolderName, ExpDate, CVV, amount, focus} = values;
-
-    const [disabled, setDisabled] = useState(false)
    
     const handleFocus = (e) => {
         setValues({ 
@@ -26,7 +23,6 @@ const PaymentForm = () => {
             focus: (e.target.name === 'CVV') ? 'cvc' : e.target.name
         });
     }
-
 
     const onChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
@@ -179,21 +175,6 @@ export default PaymentForm
 //                 <Form.Group>
 //                   <Form.Control
 //                     type="text"
-//                     name="cardType"
-//                     id="cardType"
-//                     data-testid="cardType"
-//                     placeholder="Card Type"
-//                     value={values.cardType}
-//                     onChange={handleChange}
-//                     onFocus={handleFocus}
-//                     isValid={errors.ctype}
-//                   />
-//                 </Form.Group>
-//               </Col>
-//               <Col>
-//                 <Form.Group>
-//                   <Form.Control
-//                     type="text"
 //                     id="cardExpiration"
 //                     data-testid="cardExpiration"
 //                     name="cardExpiration"
@@ -219,24 +200,11 @@ export default PaymentForm
 //                     onChange={handleChange}
 //                     onFocus={handleFocus}
 //                     isValid={errors.ccvv}
+//                     maxLength="3"
 //                   />
 //                 </Form.Group>
 //               </Col>
-//               <Col>
-//                 <Form.Group>
-//                   <Form.Control
-//                     type="text"
-//                     id="cardPostalCode"
-//                     data-testid="cardPostalCode"
-//                     name="cardPostalCode"
-//                     placeholder="Postal Code"
-//                     value={values.cardPostalCode}
-//                     onChange={handleChange}
-//                     onFocus={handleFocus}
-//                     isValid={errors.cpostal}
-//                   />
-//                 </Form.Group>
-//               </Col>
+             
 //             </Row>
 //             <Button
 //               size={"block"}
