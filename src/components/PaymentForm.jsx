@@ -41,7 +41,7 @@ const PaymentForm = () => {
     }
 
     // as we store card expiry date not in a date format, 
-    // but as numbers, we need to correctly format these numbers
+    // but as strings, we need to correctly format these strings
     // so they might look like date types.
 
     // first of all, let's slice first two digits  
