@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ExpDateComponent from './ExpDateComponent';
 
 
 const GetPayments = () => {
@@ -23,7 +24,7 @@ const GetPayments = () => {
                 <div className='card-header m-3'>Информация о платеже</div>
                   <h5 card-title>RequestId: {item._id}</h5>
                   <p className='card-text'>Количество: {item.amount}</p>
-                  <p className='card-text'>Срок действия карты: {item.ExpDate.slice(0, 2)}</p>
+                  <div>Срок действия карты: <ExpDateComponent item={item} /></div>
               </div>
           </div>
       ))}
