@@ -24,7 +24,7 @@ const GetPayments = () => {
                 <div className='card-header m-3'>Информация о платеже</div>
                   <h5 card-title>RequestId: {item._id}</h5>
                   <p className='card-text'>Количество: {item.amount}</p>
-                  <div>Срок действия карты: <ExpDateComponent item={item} /></div>
+                  <p>Срок действия карты: <ExpDateComponent item={item} /></p>
               </div>
           </div>
       ))}
