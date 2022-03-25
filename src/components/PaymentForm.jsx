@@ -107,7 +107,8 @@ const PaymentForm = () => {
                     !CardHolderName || 
                     !CVV || 
                     CVV.length < 3 || 
-                    !ExpDate || 
+                    !ExpDate ||
+                    ExpDate.length < 4 || 
                     !CardNumber || 
                     CardNumber.length < 16 || 
                     !amount
