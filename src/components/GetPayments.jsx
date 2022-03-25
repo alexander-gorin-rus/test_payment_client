@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
 import axios from 'axios';
+import { getPayments } from '../functions/payments';
 
 
 const GetPayments = () => {
@@ -18,16 +18,18 @@ const GetPayments = () => {
 
 
   return (
-    <div>
-      {data.map(item => (
-        <div key={item._id} className="site-card-border-less-wrapper">
-        <Card title="Card data" bordered={false} style={{ width: 500 }}>
-          <p>RequestId: {item._id}</p>
-          <p>Amount: {item.amount}</p>
-        </Card>
-      </div>
+    <>
+        {data.map(item => (
+          <div key={item._id} className="container">
+              <div className="site-card-border-less-wrapper">
+                <div className='card-header m-3'>Информация о платеже</div>
+                  <h5 card-title>RequestId: {item._id}</h5>
+                  <p className='card-text'>Количество: {item.amount}</p>
+                  <p className='card-text'>Срок действия карты: {item.ExpDate}</p>
+              </div>
+          </div>
       ))}
-    </div>
+    </>
   )
 }
 
