@@ -27,21 +27,19 @@ const PaymentForm = () => {
         });
     }
 
-    // const checkInputs = () => {
-    //     if (!CardHolderName || !CVV || CVV.length < 3 || !ExpDate || !CardNumber || !amount) {
-    //         setDisabled(true)
-    //     }
-    // }
-
-    //checkInputs();
 
     const onChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
     }
 
+    const toastSuccess = () => {
+        toast.success('Ваш платеж успешно проведен')
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
         handlePayment(values)
+        toastSuccess()
     }
 
     
@@ -105,7 +103,16 @@ const PaymentForm = () => {
                     onChange={onChange} 
                     min='1' 
                 />
-                <button type='Submit' disabled={!CardHolderName || !CVV || CVV.length < 3 || !ExpDate || !CardNumber || CardNumber.length < 16 || !amount} className='btn btn-primary m-2'>Оплатить</button>
+                <button type='Submit' disabled={
+                    !CardHolderName || 
+                    !CVV || 
+                    CVV.length < 3 || 
+                    !ExpDate || 
+                    !CardNumber || 
+                    CardNumber.length < 16 || 
+                    !amount
+                    } 
+                    className='btn btn-primary m-2'>Оплатить</button>
             </form>
         </div>
     )
