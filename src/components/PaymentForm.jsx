@@ -126,15 +126,16 @@ const PaymentForm = () => {
                     onChange={onChange} 
                     min='1' 
                 />
-                <button type='Submit' disabled={
-                    !CardHolderName || 
-                    !CVV || 
-                    CVV.length < 3 || 
-                    !ExpDate ||
-                    ExpDate.length < 4 || 
-                    !CardNumber || 
-                    CardNumber.length < 16 || 
-                    !amount
+                <button type='Submit' 
+                    disabled={
+                        !CardHolderName || 
+                        !CVV || 
+                        CVV.length < 3 || 
+                        !ExpDate ||
+                        ExpDate.length < 4 || 
+                        !CardNumber || 
+                        CardNumber.length < 16 || 
+                        !amount
                     } 
                     className='btn btn-primary m-2'>Оплатить</button>
             </form>
