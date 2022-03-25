@@ -19,12 +19,6 @@ const PaymentForm = () => {
     const {CardNumber, CardHolderName, ExpDate, CVV, amount, focus} = values;
     const [errors, setErrors] = useState({})
 
-    // const [number, setNumber] = useState("");
-    // const [name, setName] = useState("");
-    // const [expiry, setExpiry] = useState("");
-    // const [cvc, setCvc] = useState("");
-    //const [focus, setFocus] = useState("");
-
     const handleFocus = (e) => {
         setValues({ 
             ...values,
@@ -39,8 +33,6 @@ const PaymentForm = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         handlePayment(values)
-            .then(message => toast.success(message))
-            .catch(error => toast.error(error))
         setErrors(validateInfo(values))
         setValues({
             CardHolderName: '',
@@ -53,7 +45,7 @@ const PaymentForm = () => {
     }
 
     return (
-        <div className='container-fluid m-4'>
+        <div className='container m-4'>
             <Cards 
                 number={CardNumber}
                 name={CardHolderName}
@@ -71,7 +63,6 @@ const PaymentForm = () => {
                     value={CardNumber} 
                     onChange={onChange} 
                     onFocus={handleFocus} 
-                    isValid={errors.cnumber}   
                 />
                 <label className="form-label mr-2">ФИО</label>
                 <input 
@@ -113,7 +104,7 @@ const PaymentForm = () => {
                     onChange={onChange} 
                     min='1' 
                 />
-                <button type='Submit' className='btn btn-primary m-2'>Отправить</button>
+                <button type='Submit' disabled={!CardHolderName || !CardNumber || !ExpDate || !CVV || !amount} className='btn btn-primary m-2'>Отправить</button>
             </form>
         </div>
     )

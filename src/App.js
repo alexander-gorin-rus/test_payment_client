@@ -14,11 +14,11 @@ function App() {
       <Router>
         <Fragment>
           <ToastContainer />
-        <Header />
-        <Switch>
-          <Route exact path="/get-payments" component={GetPayments} />
-          <Route exact path="/create-payment" component={PaymentForm} />
-        </Switch>
+          <Header />
+          <Switch>
+            <Route exact path="/get-payments" component={GetPayments} />
+            <Route exact path="/create-payment" component={PaymentForm} />
+          </Switch>
         </Fragment>
       </Router>
 
