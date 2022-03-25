@@ -16,7 +16,6 @@ const GetPayments = () => {
     getPayments()
   },[])
 
-
   return (
     <>
         {data.map(item => (
