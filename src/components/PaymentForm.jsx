@@ -1,61 +1,89 @@
 import React, { useState  } from 'react';
 import Cards from 'react-credit-cards';
 import "react-credit-cards/es/styles-compiled.css";
+import { handlePayment } from '../functions/payments';
 
 const PaymentForm = () => {
 
-    const [number, setNumber] = useState("");
-    const [name, setName] = useState("");
-    const [expiry, setExpiry] = useState("");
-    const [cvc, setCvc] = useState("");
+    const [values, setValues] = useState({
+        CardHolderName: '',
+        CardNumber: '',
+        ExpDate: '',
+        CVV: '',
+        amount: 0
+    });
+
+    const {CardNumber, CardHolderName, ExpDate, CVV, amount} = values
+
+    // const [number, setNumber] = useState("");
+    // const [name, setName] = useState("");
+    // const [expiry, setExpiry] = useState("");
+    // const [cvc, setCvc] = useState("");
     const [focus, setFocus] = useState("");
+
+    const onChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value})
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        handlePayment(values)
+        console.log(values)
+    }
 
   return (
     <div>
         <Cards 
-            number={number}
-            name={name}
-            expiry={expiry}
-            cvc={cvc}
+            number={CardNumber}
+            name={CardHolderName}
+            expiry={ExpDate}
+            cvc={CVV}
             focused={focus}
         />
-        <form>
+        <form onSubmit={onSubmit}>
             <input 
                 type='tel' 
-                maxlength="16"
-                name="number" 
+                maxLength="16"
+                name="CardNumber" 
                 placeholder='Номер карты' 
-                value={number} 
-                onChange={e => setNumber(e.target.value)} 
+                value={CardNumber} 
+                onChange={onChange} 
                 onFocus={e => setFocus(e.target.name)}    
             />
             <input 
                 type='text' 
-                name="name" 
+                name="CardHolderName" 
                 placeholder='ФИО' 
-                value={name} 
-                onChange={e => setName(e.target.value)} 
+                value={CardHolderName} 
+                onChange={onChange} 
                 onFocus={e => setFocus(e.target.name)}    
             />
             <input 
                 type='text' 
-                maxlength="4"
-                name="expiry" 
+                maxLength="4"
+                name="ExpDate" 
                 placeholder='MM/ГГ' 
-                value={expiry} 
-                onChange={e => setExpiry(e.target.value)} 
+                value={ExpDate} 
+                onChange={onChange} 
                 onFocus={e => setFocus(e.target.name)}    
             />
             <input 
                 type='tel'
-                maxlength="3" 
-                name="cvc" 
+                maxLength="3" 
+                name="CVV" 
                 placeholder='cvc' 
-                value={cvc} 
-                onChange={e => setCvc(e.target.value)} 
+                value={CVV} 
+                onChange={onChange} 
                 onFocus={e => setFocus(e.target.name)}  
-                pattern="[0-9]+"  
             />
+            <input 
+                type='number' 
+                name="amount"  
+                value={amount} 
+                onChange={onChange} 
+                min='1' 
+            />
+            <button type='Submit'>Отправить</button>
         </form>
     </div>
   )
